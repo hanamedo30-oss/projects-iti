@@ -1,8 +1,27 @@
 {% extends 'base.html' %}
 
-{% block title %}App 1{% endblock %}
+{% block title %}App 1 - Database Test{% endblock %}
 
 {% block content %}
-    <h1>Welcome to App 1</h1>
-    <p>This page extends base.html</p>
+    <h1>Item List (PostgreSQL)</h1>
+
+    <!-- نموذج إضافة بيانات جـديدة -->
+    <form method="POST">
+        {% csrf_token %}
+        <input type="text" name="name" placeholder="Item Name" required>
+        <input type="text" name="description" placeholder="Description" required>
+        <button type="submit">Add Item</button>
+    </form>
+
+    <hr>
+
+    <!-- عرض البيانات المسترجعة من قاعدة البيانات -->
+    <h3>Saved Items:</h3>
+    <ul>
+        {% for item in items %}
+            <li><strong>{{ item.name }}</strong>: {{ item.description }}</li>
+        {% empty %}
+            <li>No items added yet.</li>
+        {% endfor %}
+    </ul>
 {% endblock %}

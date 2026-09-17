@@ -37,6 +37,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    
+    # أضيفي التطبيقات هنا:
+    'app1',
+    'app2',
+    'app3',
 ]
 
 MIDDLEWARE = [
@@ -74,8 +79,12 @@ WSGI_APPLICATION = 'myproject.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'mydatabase',        # تأكدي أن هذا الاسم مطابِق لقاعدة البيانات في pgAdmin
+        'USER': 'postgres',
+        'PASSWORD': 'postgres',  # ضع الباسورد الخاص بكِ هنا
+        'HOST': '127.0.0.1',         # يفضل كتابتها 127.0.0.1 بدلاً من localhost
+        'PORT': '5432',
     }
 }
 
