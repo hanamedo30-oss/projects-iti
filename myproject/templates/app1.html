@@ -1,27 +1,26 @@
-{% extends 'base.html' %}
+<h2>إضافة عنصر جديد</h2>
+<form method="POST">
+    {% csrf_token %}
+    <input type="text" name="name" placeholder="الاسم" required>
+    <input type="text" name="description" placeholder="الوصف" required>
+    <button type="submit">إضافة</button>
+</form>
 
-{% block title %}App 1 - Database Test{% endblock %}
-
-{% block content %}
-    <h1>Item List (PostgreSQL)</h1>
-
-    <!-- نموذج إضافة بيانات جـديدة -->
-    <form method="POST">
-        {% csrf_token %}
-        <input type="text" name="name" placeholder="Item Name" required>
-        <input type="text" name="description" placeholder="Description" required>
-        <button type="submit">Add Item</button>
-    </form>
-
-    <hr>
-
-    <!-- عرض البيانات المسترجعة من قاعدة البيانات -->
-    <h3>Saved Items:</h3>
-    <ul>
-        {% for item in items %}
-            <li><strong>{{ item.name }}</strong>: {{ item.description }}</li>
-        {% empty %}
-            <li>No items added yet.</li>
-        {% endfor %}
-    </ul>
-{% endblock %}
+<h2>قائمة العناصر</h2>
+<ul>
+    {% for item in items %}
+        <li>
+            <strong>{{ item.name }}</strong>: {{ item.description }}
+            <a href="{% url 'update_item_app1' item.id %}">تعديل</a> | 
+            <a href="{% url 'delete_item_app1' item.id %}" onclick="return confirm('هل أنت متأكد من الحذف؟');">حذف</a>
+        </li>
+    {% endfor %}
+</ul>
+<h2>تعديل العنصر</h2>
+<form method="POST">
+    {% csrf_token %}
+    <input type="text" name="name" value="{{ item.name }}" required>
+    <input type="text" name="description" value="{{ item.description }}" required>
+    <button type="submit">حفظ التغييرات</button>
+</form>
+<a href="{% url 'home_app1' %}">إلغاء</a>

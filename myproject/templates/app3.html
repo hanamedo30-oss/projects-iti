@@ -3,6 +3,38 @@
 {% block title %}App 3{% endblock %}
 
 {% block content %}
-    <h1>Welcome to App 3</h1>
-    <p>This page extends base.html</p>
+<h2>إضافة عنصر جديد (App 3)</h2>
+<form method="POST">
+    {% csrf_token %}
+    <input type="text" name="name" placeholder="الاسم" required>
+    <input type="text" name="description" placeholder="الوصف" required>
+    <button type="submit">إضافة</button>
+</form>
+
+<h2>قائمة العناصر</h2>
+<ul>
+    {% for item in items %}
+        <li>
+            <strong>{{ item.name }}</strong>: {{ item.description }}
+            <a href="{% url 'update_item_app3' item.id %}">تعديل</a> | 
+            <a href="{% url 'delete_item_app3' item.id %}" onclick="return confirm('هل أنت متأكد من الحذف؟');">حذف</a>
+        </li>
+    {% empty %}
+        <li>لا توجد عناصر مضافة بعد.</li>
+    {% endfor %}
+</ul>
+{% endblock %}
+{% extends 'base.html' %}
+
+{% block title %}تعديل عنصر (App 3){% endblock %}
+
+{% block content %}
+<h2>تعديل العنصر</h2>
+<form method="POST">
+    {% csrf_token %}
+    <input type="text" name="name" value="{{ item.name }}" required>
+    <input type="text" name="description" value="{{ item.description }}" required>
+    <button type="submit">حفظ التغييرات</button>
+</form>
+<a href="{% url 'home_app3' %}">إلغاء</a>
 {% endblock %}
